@@ -26,25 +26,27 @@ fn do_calc_ff(mass: i32) -> i32 {
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Hello, Advent Of Code 2020!");
     // part 1
-    let data = read_data("datax").unwrap();
+    let data = read_data("./data/datax").unwrap();
     let mut all = 0;
     for mass in data.iter() {
         all += do_calc(mass.parse::<i32>().unwrap());
     }
     println!("Fuel needed (part 1): {}", all);
+    assert_eq!(3376997, all);
     //part 2
     let mut all = 0;
     for mass in data.iter() {
         all += do_calc_ff(mass.parse::<i32>().unwrap());
     }
     println!("Fuel needed (part 2): {}", all);
+    assert_eq!(5062623, all);
     //part 2
     Ok(())
 }
 
 #[test]
 fn data_read() {
-    println!("{:?}", read_data("datax").unwrap());
+    println!("{:?}", read_data("./data/datax").unwrap());
 }
 
 #[test]
