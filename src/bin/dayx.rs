@@ -1,8 +1,5 @@
 use aoc::read_data;
 use std::error::Error;
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
 
 /// fuel for one module (mass)
 fn do_calc(mass: i32) -> i32 {
@@ -15,7 +12,7 @@ fn do_calc_ff(mass: i32) -> i32 {
     let mut old = mass;
     loop {
         old = do_calc(old);
-        if old == 0 || old < 0 {
+        if old <= 0 {
             break;
         };
         all += old;
