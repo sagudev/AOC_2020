@@ -17,3 +17,5 @@ printf -v t3 %q "path = \"src/bin/day$1.rs\""
 sed -i "/path = \"src\/bin\/dayx.rs/a \\\n$t1\n$t2\n$t3" Cargo.toml
 # use template for new day
 cp ./src/bin/dayx.rs ./src/bin/day$1.rs
+# replace old datapath
+sed -i "s|./data/datax|./data/data$1|g" ./src/bin/day$1.rs
