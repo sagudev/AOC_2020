@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOC</title>
+    <style>
+        textarea {
+            width: 100%;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            width: fill-available;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        function print(f) {
+            document.getElementById("out").innerHTML += (f + "<br>");
+        }
+    </script>
+    <script type="module">
+        import init, { js_mach, Days } from './pkg/aoc.js';
+        async function run() {
+            await init();
+            for (const prop in Days) {
+                if (prop.includes("D")) {
+                    console.log(`${prop}: ${Days[prop]}`);
+                    var el = document.getElementById("day");
+                    el.innerHTML += `<option value="${Days[prop]}">${prop}</option>`;
+                }
+            }
+        }
+        run();
+        /* Export to global */
+        window.js_mach = js_mach;
+        window.Days = Days;
+    </script>
+    <script>
+        const tx = document.getElementsByTagName('textarea');
+        for (let i = 0; i < tx.length; i++) {
+            tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+            tx[i].addEventListener("input", OnInput, false);
+        }
+
+        function OnInput() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        }
+        function form() {
+            data = document.getElementById("data").value;
+            day = document.getElementById("day").value;
+            console.log(data);
+            console.log(day);
+            print(js_mach(0, data));
+            return false;
+        }
+    </script>
+    <form onsubmit="return form();">
+        <label for="day">Select day:</label>
+        <select name="day" id="day">
+        </select><br>
+        <label for="data">AOC data:</label><br>
+        <textarea id="data" oninput='this.style.height = "";this.style.height = this.scrollHeight + 3 + "px"'>
+            104489
+            69854
+            93424
+            103763
+            119636
+            130562
+            121744
+            84851
+            143661
+            94519
+            116576
+            148771
+            74038
+            131735
+            95594
+            125198
+            92217
+            84471
+            53518
+            97787
+            55422
+            137807
+            78806
+            74665
+            103930
+            121642
+            123008
+            104598
+            97383
+            129359
+            85372
+            88930
+            106944
+            118404
+            126095
+            67230
+            116697
+            85950
+            148291
+            123171
+            82736
+            52753
+            134746
+            53238
+            74952
+            105933
+            104613
+            115283
+            80320
+            139152
+            76455
+            66729
+            81209
+            130176
+            116843
+            67292
+            74262
+            131694
+            92817
+            51540
+            58957
+            143342
+            76896
+            129631
+            77148
+            129784
+            115307
+            96214
+            110538
+            51492
+            124376
+            78161
+            59821
+            58184
+            132524
+            130714
+            112653
+            137988
+            112269
+            62214
+            115989
+            123073
+            119711
+            82258
+            67695
+            81023
+            70012
+            93438
+            131749
+            103652
+            63557
+            88224
+            117414
+            75579
+            146422
+            139852
+            85116
+            124902
+            143167
+            147781
+
+            
+            
+
+        </textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        t = document.getElementById("data");
+        t.style.height = "";
+        t.style.height = t.scrollHeight + 3 + "px";
+    </script>
+    <code id="out">
+
+    </code>
+</body>
+
+</html>

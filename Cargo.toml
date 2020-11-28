@@ -5,6 +5,7 @@ authors = ["sagudev <samo.golez@outlook.com>"]
 edition = "2018"
 
 [lib]
+crate-type = ["cdylib", "rlib"]
 name = "aoc"
 path = "src/lib.rs"
 
@@ -12,4 +13,9 @@ path = "src/lib.rs"
 name = "dayx"
 path = "src/bin/dayx.rs"
 
+[features]
+wasm = ["console_error_panic_hook", "wasm-bindgen"]
+
 [dependencies]
+wasm-bindgen = { version = "0.2.68", optional = true }
+console_error_panic_hook = { version = "0.1", optional = true }

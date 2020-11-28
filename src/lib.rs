@@ -1,8 +1,11 @@
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::fs::File;
 use std::path::Path;
 use std::io::Error;
+pub mod day;
 
 pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
 where P: AsRef<Path>, {
@@ -15,4 +18,34 @@ where P: AsRef<Path>, {
         }
     }
     Ok(v)
+}
+
+#[cfg(feature = "wasm")]
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
+
+#[cfg(feature = "wasm")]
+macro_rules! printer {
+    // console.log import
+    ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
+}
+
+#[cfg(feature = "wasm")]
+#[wasm_bindgen]
+pub fn js_mach(day: day::Days, s: String) -> Box<[JsValue]> {
+    printer!("{:?} ||| {}", day, s);
+    let mut data = Vec::new();
+    for line in s.lines() {
+        let line = line.trim();
+        if !line.is_empty() {
+            data.push(line.to_string());
+        }
+    }
+    printer!("||| {:?}", data);
+    let day = day.new(data);
+    printer!("||| ah");
+    vec![wasm_bindgen::JsValue::from_str(&day.p1()), wasm_bindgen::JsValue::from_str(&day.p2())].into_boxed_slice()
 }
