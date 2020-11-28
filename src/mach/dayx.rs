@@ -1,4 +1,4 @@
-use crate::day::Day;
+use crate::mach::Day;
 
 pub struct DayX {
     pub data: Vec<String>,

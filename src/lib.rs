@@ -5,9 +5,9 @@ use std::io::BufReader;
 use std::fs::File;
 use std::path::Path;
 use std::io::Error;
-pub mod day;
+pub mod mach;
 #[cfg(feature = "wasm")]
-use crate::day::Day;
+use crate::mach::Day;
 
 pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
 where P: AsRef<Path>, {
@@ -37,7 +37,7 @@ macro_rules! printer {
 
 #[cfg(feature = "wasm")]
 #[wasm_bindgen]
-pub fn js_mach(day: day::Days, s: String) -> Box<[JsValue]> {
+pub fn js_mach(day: mach::Days, s: String) -> Box<[JsValue]> {
     let mut data = Vec::new();
     for line in s.lines() {
         let line = line.trim();

@@ -20,7 +20,7 @@ pub enum Days {
 impl Days {
     pub fn new(&self, data: Vec<String>) -> impl Day {
         match self {
-            Days::Dayx => crate::day::dayx::DayX::new(data)
+            Days::Dayx => crate::mach::dayx::DayX::new(data)
         }
     }
 }
