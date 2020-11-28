@@ -28,9 +28,6 @@ do
     sed -i "s|DayX|Day$1|g" $file
 done
 # double
-for file in ./src/lib.rs ./src/mach/mod.rs
-do
-	#sed -i "s|dayx|day$1|g" $file
-    #sed -i "s|Dayx|Day$1|g" $file
-    #sed -i "s|DayX|Day$1|g" $file
-done
+sed -i "/pub mod dayx;/a pub mod day$1;" ./src/mach/mod.rs
+sed -i "/Dayx,/a Day$1," ./src/mach/mod.rs
+sed -i "/Days::Dayx => crate::mach::dayx::DayX::new(data),/a Days::Day$1 => crate::mach::day$1::Day$1::new(data)," ./src/mach/mod.rs

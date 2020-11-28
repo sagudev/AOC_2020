@@ -26,7 +26,7 @@ impl Days {
     /// Create new day placeholder from data
     pub fn new(&self, data: Vec<String>) -> impl Day {
         match self {
-            Days::Dayx => crate::mach::dayx::DayX::new(data)
+            Days::Dayx => crate::mach::dayx::DayX::new(data),
         }
     }
 }

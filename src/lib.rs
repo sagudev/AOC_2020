@@ -1,16 +1,18 @@
-#[cfg(feature = "wasm")]
-use wasm_bindgen::prelude::*;
+use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
-use std::fs::File;
-use std::path::Path;
 use std::io::Error;
+use std::path::Path;
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
 pub mod mach;
 #[cfg(feature = "wasm")]
 use crate::mach::Day;
 
 pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
-where P: AsRef<Path>, {
+where
+    P: AsRef<Path>,
+{
     let file = File::open(filename)?;
     let mut v = Vec::new();
     for line in BufReader::new(file).lines() {
@@ -50,5 +52,9 @@ pub fn js_mach(day: mach::Days, s: String) -> Box<[JsValue]> {
         }
     }
     let day = day.new(data);
-    vec![wasm_bindgen::JsValue::from_str(&day.p1()), wasm_bindgen::JsValue::from_str(&day.p2())].into_boxed_slice()
+    vec![
+        wasm_bindgen::JsValue::from_str(&day.p1()),
+        wasm_bindgen::JsValue::from_str(&day.p2()),
+    ]
+    .into_boxed_slice()
 }
