@@ -5,7 +5,9 @@ pub trait Day {
     /// Part 2
     fn p2(&self) -> String;
     /// Insert data
-    fn new(data: Vec<String>) -> Self where Self: Sized;
+    fn new(data: Vec<String>) -> Self
+    where
+        Self: Sized;
 }
 
 pub mod dayx;
