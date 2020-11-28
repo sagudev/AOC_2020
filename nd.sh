@@ -15,7 +15,22 @@ printf -v t2 %q "name = \"day$1\""
 printf -v t3 %q "path = \"src/bin/day$1.rs\""
 # add new bin to Cargo.toml
 sed -i "/path = \"src\/bin\/dayx.rs/a \\\n$t1\n$t2\n$t3" Cargo.toml
-# use template for new day
+# use dubble files
 cp ./src/bin/dayx.rs ./src/bin/day$1.rs
+cp ./src/mach/dayx.rs ./src/mach/day$1.rs
 # replace old datapath
 sed -i "s|./data/datax|./data/data$1|g" ./src/bin/day$1.rs
+# replace
+for file in ./src/bin/day$1.rs ./src/mach/day$1.rs
+do
+	sed -i "s|dayx|day$1|g" $file
+    sed -i "s|Dayx|Day$1|g" $file
+    sed -i "s|DayX|Day$1|g" $file
+done
+# double
+for file in ./src/lib.rs ./src/mach/mod.rs
+do
+	#sed -i "s|dayx|day$1|g" $file
+    #sed -i "s|Dayx|Day$1|g" $file
+    #sed -i "s|DayX|Day$1|g" $file
+done
