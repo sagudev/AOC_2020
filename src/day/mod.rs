@@ -4,7 +4,7 @@ pub trait Day {
     fn new(data: Vec<String>) -> Self;
 }
 
-pub mod x;
+pub mod dayx;
 
 #[cfg(feature = "wasm")]
 use wasm_bindgen::prelude::*;
@@ -20,7 +20,7 @@ pub enum Days {
 impl Days {
     pub fn new(&self, data: Vec<String>) -> impl Day {
         match self {
-            Days::Dayx => crate::day::x::DayX::new(data)
+            Days::Dayx => crate::day::dayx::DayX::new(data)
         }
     }
 }
