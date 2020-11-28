@@ -153,7 +153,7 @@ export function js_mach(day, s) {
 /**
 * List of all days
 */
-export const Days = Object.freeze({ Dayx:0,"0":"Dayx", });
+export const Days = Object.freeze({ Dayx:0,"0":"Dayx",Day5:1,"1":"Day5", });
 
 async function load(module, imports) {
     if (typeof Response === 'function' && module instanceof Response) {

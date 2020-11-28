@@ -13,6 +13,7 @@ export function js_mach(day: number, s: string): any[];
 */
 export enum Days {
   Dayx,
+  Day5,
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;

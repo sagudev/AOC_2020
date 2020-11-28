@@ -10,6 +10,7 @@ pub trait Day {
         Self: Sized;
 }
 
+pub mod day5;
 pub mod dayx;
 
 #[cfg(feature = "wasm")]
@@ -21,6 +22,7 @@ use wasm_bindgen::prelude::*;
 /// List of all days
 pub enum Days {
     Dayx,
+    Day5,
 }
 
 #[cfg(feature = "wasm")]
@@ -29,6 +31,7 @@ impl Days {
     pub fn new(&self, data: Vec<String>) -> Box<dyn Day> {
         match self {
             Days::Dayx => Box::new(crate::mach::dayx::DayX::new(data)),
+            Days::Day5 => Box::new(crate::mach::day5::Day5::new(data)),
         }
     }
 }
