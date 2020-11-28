@@ -6,6 +6,8 @@ use std::fs::File;
 use std::path::Path;
 use std::io::Error;
 pub mod day;
+#[cfg(feature = "wasm")]
+use crate::day::Day;
 
 pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
 where P: AsRef<Path>, {

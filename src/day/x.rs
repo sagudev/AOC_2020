@@ -5,8 +5,8 @@ pub struct DayX {
 }
 
 impl Day for DayX {
-    fn new(data: Vec<String>) -> Box<dyn Day> {
-        Box::new(Self { data })
+    fn new(data: Vec<String>) -> Self {
+        Self { data }
     }
     fn p1(&self) -> String {
         let mut all = 0;

@@ -16,6 +16,9 @@ path = "src/bin/dayx.rs"
 [features]
 wasm = ["console_error_panic_hook", "wasm-bindgen"]
 
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
 [dependencies]
 wasm-bindgen = { version = "0.2.68", optional = true }
 console_error_panic_hook = { version = "0.1", optional = true }

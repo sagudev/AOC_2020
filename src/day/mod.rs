@@ -1,7 +1,7 @@
 pub trait Day {
     fn p1(&self) -> String;
     fn p2(&self) -> String;
-    fn new(data: Vec<String>) -> Box<dyn Day> where Self: Sized;
+    fn new(data: Vec<String>) -> Self;
 }
 
 pub mod x;
@@ -18,7 +18,7 @@ pub enum Days {
 
 #[cfg(feature = "wasm")]
 impl Days {
-    pub fn new(&self, data: Vec<String>) -> Box<dyn Day> {
+    pub fn new(&self, data: Vec<String>) -> impl Day {
         match self {
             Days::Dayx => crate::day::x::DayX::new(data)
         }
