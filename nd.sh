@@ -31,5 +31,5 @@ done
 # double
 sed -i "/pub mod dayx;/a pub mod day$1;" ./src/mach/mod.rs
 sed -i "/Dayx,/a Day$1," ./src/mach/mod.rs
-sed -i "/Days::Dayx => crate::mach::dayx::DayX::new(data),/a Days::Day$1 => crate::mach::day$1::Day$1::new(data)," ./src/mach/mod.rs
+sed -i "/Days::Dayx => Box::new(crate::mach::dayx::DayX::new(data)),/a Days::Day$1 => Box::new(crate::mach::day$1::Day$1::new(data))," ./src/mach/mod.rs
 cargo fmt
