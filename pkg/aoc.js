@@ -127,6 +127,8 @@ function getArrayJsValueFromWasm0(ptr, len) {
     return result;
 }
 /**
+* this is called from js
+* data is split by newline
 * @param {number} day
 * @param {string} s
 * @returns {any[]}
@@ -149,6 +151,7 @@ export function js_mach(day, s) {
 }
 
 /**
+* List of all days
 */
 export const Days = Object.freeze({ Dayx:0,"0":"Dayx", });
 

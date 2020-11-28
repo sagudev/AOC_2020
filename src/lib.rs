@@ -30,6 +30,8 @@ extern "C" {
 }
 
 #[cfg(feature = "wasm")]
+#[allow(unused_macros)]
+/// Just in case (printer macro)
 macro_rules! printer {
     // console.log import
     ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
@@ -37,6 +39,8 @@ macro_rules! printer {
 
 #[cfg(feature = "wasm")]
 #[wasm_bindgen]
+/// this is called from js
+/// data is split by newline
 pub fn js_mach(day: mach::Days, s: String) -> Box<[JsValue]> {
     let mut data = Vec::new();
     for line in s.lines() {

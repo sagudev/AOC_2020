@@ -1,12 +1,15 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
+* this is called from js
+* data is split by newline
 * @param {number} day
 * @param {string} s
 * @returns {any[]}
 */
 export function js_mach(day: number, s: string): any[];
 /**
+* List of all days
 */
 export enum Days {
   Dayx,
