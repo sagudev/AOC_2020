@@ -6,8 +6,6 @@ use std::path::Path;
 #[cfg(feature = "wasm")]
 use wasm_bindgen::prelude::*;
 pub mod mach;
-#[cfg(feature = "wasm")]
-use crate::mach::Day;
 
 pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
 where
