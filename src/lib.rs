@@ -36,7 +36,6 @@ macro_rules! printer {
 #[cfg(feature = "wasm")]
 #[wasm_bindgen]
 pub fn js_mach(day: day::Days, s: String) -> Box<[JsValue]> {
-    printer!("{:?} ||| {}", day, s);
     let mut data = Vec::new();
     for line in s.lines() {
         let line = line.trim();
@@ -44,8 +43,6 @@ pub fn js_mach(day: day::Days, s: String) -> Box<[JsValue]> {
             data.push(line.to_string());
         }
     }
-    printer!("||| {:?}", data);
     let day = day.new(data);
-    printer!("||| ah");
     vec![wasm_bindgen::JsValue::from_str(&day.p1()), wasm_bindgen::JsValue::from_str(&day.p2())].into_boxed_slice()
 }
