@@ -5,7 +5,7 @@ pub trait Day {
     /// Part 2
     fn p2(&self) -> String;
     /// Insert data
-    fn new(data: Vec<String>) -> Self;
+    fn new(data: Vec<String>) -> Self where Self: Sized;
 }
 
 pub mod dayx;
@@ -24,9 +24,9 @@ pub enum Days {
 #[cfg(feature = "wasm")]
 impl Days {
     /// Create new day placeholder from data
-    pub fn new(&self, data: Vec<String>) -> impl Day {
+    pub fn new(&self, data: Vec<String>) -> Box<dyn Day> {
         match self {
-            Days::Dayx => crate::mach::dayx::DayX::new(data),
+            Days::Dayx => Box::new(crate::mach::dayx::DayX::new(data)),
         }
     }
 }
