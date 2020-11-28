@@ -15,6 +15,7 @@ printf -v t2 %q "name = \"day$1\""
 printf -v t3 %q "path = \"src/bin/day$1.rs\""
 # add new bin to Cargo.toml
 sed -i "/path = \"src\/bin\/dayx.rs/a \\\n$t1\n$t2\n$t3" Cargo.toml
+sed -i "/default-run = \"dayx\"/a default-run = \"day$1\"" Cargo.toml
 # use dubble files
 cp ./src/bin/dayx.rs ./src/bin/day$1.rs
 cp ./src/mach/dayx.rs ./src/mach/day$1.rs
@@ -31,3 +32,4 @@ done
 sed -i "/pub mod dayx;/a pub mod day$1;" ./src/mach/mod.rs
 sed -i "/Dayx,/a Day$1," ./src/mach/mod.rs
 sed -i "/Days::Dayx => crate::mach::dayx::DayX::new(data),/a Days::Day$1 => crate::mach::day$1::Day$1::new(data)," ./src/mach/mod.rs
+cargo fmt
