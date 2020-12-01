@@ -29,14 +29,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         all += do_calc(mass.parse::<i32>().unwrap());
     }
     println!("Fuel needed (part 1): {}", all);
-    assert_eq!(3376997, all);
+    //assert_eq!(3376997, all);
     //part 2
     let mut all = 0;
     for mass in data.iter() {
         all += do_calc_ff(mass.parse::<i32>().unwrap());
     }
     println!("Fuel needed (part 2): {}", all);
-    assert_eq!(5062623, all);
+    //assert_eq!(5062623, all);
     //part 2
     Ok(())
 }
@@ -47,7 +47,7 @@ fn data_read() {
 }
 
 #[test]
-fn calc() {
+fn dayx_calc() {
     // part 1
     assert_eq!(do_calc(12), 2);
     assert_eq!(do_calc(14), 2);
