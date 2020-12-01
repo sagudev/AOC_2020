@@ -11,7 +11,7 @@ pub fn sort<T: Eq + Ord + Copy>(tpl: (T, T, T)) -> (T, T, T) {
 }
 
 /// find sum 2020 in 2 numbers
-fn find_2020(v: &Vec<i32>) -> Option<(i32, i32)> {
+fn find_2020(v: &[i32]) -> Option<(i32, i32)> {
     for e in v {
         for c in v {
             if (e + c) == 2020 {
@@ -23,13 +23,13 @@ fn find_2020(v: &Vec<i32>) -> Option<(i32, i32)> {
     None
 }
 
-fn p1(v: &Vec<i32>) -> i32 {
+fn p1(v: &[i32]) -> i32 {
     let par = find_2020(v).unwrap();
     par.0 * par.1
 }
 
 /// find sum 2020 in 2 numbers
-fn find_2020_3(v: &Vec<i32>) -> Option<(i32, i32, i32)> {
+fn find_2020_3(v: &[i32]) -> Option<(i32, i32, i32)> {
     for e in v {
         for c in v {
             for s in v {
@@ -43,7 +43,7 @@ fn find_2020_3(v: &Vec<i32>) -> Option<(i32, i32, i32)> {
     None
 }
 
-fn p2(v: &Vec<i32>) -> i32 {
+fn p2(v: &[i32]) -> i32 {
     let par = find_2020_3(v).unwrap();
     par.0 * par.1 * par.2
 }
