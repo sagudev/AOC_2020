@@ -3,7 +3,7 @@ name = "aoc_2020"
 version = "0.1.0"
 authors = ["sagudev <samo.golez@outlook.com>"]
 edition = "2018"
-default-run = "dayx"
+default-run = "day1"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -13,6 +13,10 @@ path = "src/lib.rs"
 [[bin]]
 name = "dayx"
 path = "src/bin/dayx.rs"
+
+[[bin]]
+name = "day1"
+path = "src/bin/day1.rs"
 
 [features]
 wasm = ["console_error_panic_hook", "wasm-bindgen"]

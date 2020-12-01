@@ -8,12 +8,12 @@ fn main() {
     let dayx = mach::dayx::DayX::new(data);
     // part 1
     let p1 = dayx.p1().parse::<i32>().unwrap();
-    println!("Fuel needed (part 1): {}", p1);
-    assert_eq!(3376997, p1);
+    println!("Part 1: {}", p1);
+    //assert_eq!(3376997, p1);
     //part 2
     let p2 = dayx.p2().parse::<i32>().unwrap();
-    println!("Fuel needed (part 2): {}", p2);
-    assert_eq!(5062623, p2);
+    println!("Part 2: {}", p2);
+    //assert_eq!(5062623, p2);
 }
 
 #[test]
