@@ -8,6 +8,7 @@ if [ -f "./data/data$1" ]; then
     echo "./data/data$1 exists."
     exit 1
 fi
+p=$(expr $1 - 1)
 # create new empty data file
 touch ./data/data$1
 printf -v t1 %q "[[bin]]"
