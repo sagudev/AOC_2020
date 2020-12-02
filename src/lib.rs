@@ -24,19 +24,6 @@ where
     Ok(v)
 }
 
-pub fn veca<T, U>(vec: Vec<U>) -> Result<Vec<T>, Error>
-where
-    T: FromStr,
-    <T as FromStr>::Err: Debug,
-    U: FromStr,
-    <U as FromStr>::Err: Debug,
-{
-    let v = vec.iter()
-        .map(|line| line.parse::<T>().unwrap())
-        .collect();
-    Ok(v)
-}
-
 #[cfg(feature = "wasm")]
 pub fn data_vec<T>(vec: Vec<String>) -> Result<Vec<T>, Error>
 where

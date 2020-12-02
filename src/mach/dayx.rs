@@ -1,13 +1,12 @@
-use std::str::FromStr;
 use crate::mach::Day;
 
 pub struct DayX {
     pub data: Vec<String>,
 }
 
-impl<T: FromStr> Day<T> for DayX {
-    fn new(data: Vec<T>) -> Self {
-        Self { data.into() }
+impl Day<String> for DayX {
+    fn new(data: Vec<String>) -> Self {
+        Self { data }
     }
     fn p1(&self) -> String {
         let mut all = 0;

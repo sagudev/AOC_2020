@@ -1,7 +1,5 @@
-use std::str::FromStr;
-
 /// Every day impl these
-pub trait Day<T: FromStr> {
+pub trait Day<T> {
     /// Part 1
     fn p1(&self) -> String;
     /// Part 2
