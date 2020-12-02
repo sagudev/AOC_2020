@@ -23,7 +23,7 @@ fn do_calc_ff(mass: i32) -> i32 {
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Hello, Advent Of Code 2020!");
     // part 1
-    let data = read_data("./data/datax").unwrap();
+    let data: Vec<String> = read_data("./data/datax").unwrap();
     let mut all = 0;
     for mass in data.iter() {
         all += do_calc(mass.parse::<i32>().unwrap());
@@ -43,7 +43,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 #[test]
 fn data_read() {
-    println!("{:?}", read_data("./data/datax").unwrap());
+    println!("{:?}", read_data::<String>("./data/datax").unwrap());
 }
 
 #[test]

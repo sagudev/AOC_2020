@@ -1,20 +1,23 @@
+use std::fmt::Debug;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Error;
 use std::path::Path;
+use std::path::PathBuf;
+use std::str::FromStr;
 
-pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
+pub fn read_data<T>(filename: &str) -> Result<Vec<T>, Error>
 where
-    P: AsRef<Path>,
+    T: FromStr,
+    <T as FromStr>::Err: Debug,
 {
     let file = File::open(filename)?;
-    let mut v = Vec::new();
-    for line in BufReader::new(file).lines() {
-        let line = line?;
-        if !line.is_empty() {
-            v.push(line);
-        }
-    }
+    let v = BufReader::new(file)
+        .lines()
+        .map(|line| line.unwrap())
+        .filter(|line| !line.is_empty())
+        .map(|line| line.trim().parse::<T>().unwrap())
+        .collect();
     Ok(v)
 }

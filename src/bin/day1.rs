@@ -50,19 +50,14 @@ fn p2(v: &[i32]) -> i32 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Hello, Advent Of Code 2020!");
-    let data = read_data("./data/data1").unwrap();
-    // lets reorgenize data
-    let mut v: Vec<i32> = Vec::new();
-    for d in data {
-        v.push(d.parse::<i32>().unwrap());
-    }
+    let data: Vec<i32> = read_data("./data/data1").unwrap();
     // part 1
-    println!("Find the two entries that sum to 2020; what do you get if you multiply them together? {:?}", p1(&v));
+    println!("Find the two entries that sum to 2020; what do you get if you multiply them together? {:?}", p1(&data));
     //assert_eq!(842016, p1(&v));
     //part 2
     println!(
         "In your expense report, what is the product of the three entries that sum to 2020? {:?}",
-        p2(&v)
+        p2(&data)
     );
     //assert_eq!(9199664, p1(&v));
     Ok(())
@@ -70,7 +65,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 #[test]
 fn data_read() {
-    println!("{:?}", read_data("./data/data1").unwrap());
+    println!("{:?}", read_data::<String>("./data/data1").unwrap());
 }
 
 #[test]

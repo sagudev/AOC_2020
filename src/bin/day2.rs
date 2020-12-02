@@ -68,20 +68,16 @@ fn p2(data: &[Password]) -> usize {
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Hello, Advent Of Code 2020!");
     // part 1
-    let data = read_data("./data/data2").unwrap();
-    let mut v: Vec<Password> = Vec::new();
-    for d in data {
-        v.push(d.parse().unwrap())
-    }
-    println!("Part 1: {}", p1(&v));
+    let data: Vec<Password> = read_data::<Password>("./data/data2").unwrap();
+    println!("Part 1: {}", p1(&data));
     //part 2
-    println!("Part 2: {}", p2(&v));
+    println!("Part 2: {}", p2(&data));
     Ok(())
 }
 
 #[test]
 fn data_read() {
-    println!("{:?}", read_data("./data/data2").unwrap());
+    println!("{:?}", read_data::<String>("./data/data2").unwrap());
 }
 
 #[test]
