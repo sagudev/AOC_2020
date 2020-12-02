@@ -16,7 +16,7 @@ printf -v t2 %q "name = \"day$1\""
 printf -v t3 %q "path = \"src/bin/day$1.rs\""
 # add new bin to Cargo.toml
 sed -i "/path = \"src\/bin\/dayx.rs/a \\\n$t1\n$t2\n$t3" Cargo.toml
-sed -i "s/default-run = \"dayx\"/default-run = \"day$1\"/" Cargo.toml
+sed -i "s/default-run = \"day$p\"/default-run = \"day$1\"/" Cargo.toml
 # use template for new day
 cp ./src/bin/dayx.rs ./src/bin/day$1.rs
 # replace old datapath
