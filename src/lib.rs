@@ -3,8 +3,6 @@ use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Error;
-use std::path::Path;
-use std::path::PathBuf;
 use std::str::FromStr;
 
 pub fn read_data<T>(filename: &str) -> Result<Vec<T>, Error>
