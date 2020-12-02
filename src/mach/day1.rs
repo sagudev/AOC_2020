@@ -1,26 +1,18 @@
 use crate::mach::Day;
 
 pub struct Day1 {
-    pub data: Vec<String>,
+    pub data: Vec<i32>,
 }
 
-impl Day for Day1 {
-    fn new(data: Vec<String>) -> Self {
+impl Day<i32> for Day1 {
+    fn new(data: Vec<i32>) -> Self {
         Self { data }
     }
     fn p1(&self) -> String {
-        let mut v: Vec<i32> = Vec::new();
-        for d in &self.data {
-            v.push(d.parse::<i32>().unwrap());
-        }
-        format!("{}", p1(&v))
+        format!("{}", p1(&self.data))
     }
     fn p2(&self) -> String {
-        let mut v: Vec<i32> = Vec::new();
-        for d in &self.data {
-            v.push(d.parse::<i32>().unwrap());
-        }
-        format!("{}", p2(&v))
+        format!("{}", p2(&self.data))
     }
 }
 

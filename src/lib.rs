@@ -1,24 +1,51 @@
+use std::fmt::Debug;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Error;
-use std::path::Path;
+use std::str::FromStr;
+
 #[cfg(feature = "wasm")]
 use wasm_bindgen::prelude::*;
 pub mod mach;
 
-pub fn read_data<P>(filename: P) -> Result<Vec<String>, Error>
+pub fn read_data<T>(filename: &str) -> Result<Vec<T>, Error>
 where
-    P: AsRef<Path>,
+    T: FromStr,
+    <T as FromStr>::Err: Debug,
 {
     let file = File::open(filename)?;
-    let mut v = Vec::new();
-    for line in BufReader::new(file).lines() {
-        let line = line?;
-        if !line.is_empty() {
-            v.push(line);
-        }
-    }
+    let v = BufReader::new(file)
+        .lines()
+        .map(|line| line.unwrap())
+        .filter(|line| !line.is_empty())
+        .map(|line| line.trim().parse::<T>().unwrap())
+        .collect();
+    Ok(v)
+}
+
+pub fn veca<T, U>(vec: Vec<U>) -> Result<Vec<T>, Error>
+where
+    T: FromStr,
+    <T as FromStr>::Err: Debug,
+    U: FromStr,
+    <U as FromStr>::Err: Debug,
+{
+    let v = vec.iter()
+        .map(|line| line.parse::<T>().unwrap())
+        .collect();
+    Ok(v)
+}
+
+#[cfg(feature = "wasm")]
+pub fn data_vec<T>(vec: Vec<String>) -> Result<Vec<T>, Error>
+where
+    T: FromStr,
+    <T as FromStr>::Err: Debug,
+{
+    let v = vec.iter()
+        .map(|line| line.parse::<T>().unwrap())
+        .collect();
     Ok(v)
 }
 
@@ -42,14 +69,10 @@ macro_rules! printer {
 /// this is called from js
 /// data is split by newline
 pub fn js_mach(day: mach::Days, s: String) -> Box<[JsValue]> {
-    let mut data = Vec::new();
-    for line in s.lines() {
-        let line = line.trim();
-        if !line.is_empty() {
-            data.push(line.to_string());
-        }
-    }
-    let day = day.new(data);
+    let day = day.new(
+        s.lines().filter(|line| !line.is_empty())
+            .map(|line| line.trim().to_string()).collect(),
+    );
     vec![
         wasm_bindgen::JsValue::from_str(&day.p1()),
         wasm_bindgen::JsValue::from_str(&day.p2()),

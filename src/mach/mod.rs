@@ -1,13 +1,13 @@
+use std::str::FromStr;
+
 /// Every day impl these
-pub trait Day {
+pub trait Day<T: FromStr> {
     /// Part 1
     fn p1(&self) -> String;
     /// Part 2
     fn p2(&self) -> String;
     /// Insert data
-    fn new(data: Vec<String>) -> Self
-    where
-        Self: Sized;
+    fn new(data: Vec<T>) -> Self;
 }
 
 pub mod day1;
@@ -31,7 +31,7 @@ impl Days {
     pub fn new(&self, data: Vec<String>) -> Box<dyn Day> {
         match self {
             Days::Dayx => Box::new(crate::mach::dayx::DayX::new(data)),
-            Days::Day1 => Box::new(crate::mach::day1::Day1::new(data)),
+            Days::Day1 => Box::new(crate::mach::day1::Day1::new(crate::data_vec(data).unwrap())),
         }
     }
 }

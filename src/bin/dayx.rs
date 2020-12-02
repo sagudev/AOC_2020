@@ -19,5 +19,5 @@ fn main() {
 #[test]
 /// Am I getting right data?
 fn data_read() {
-    println!("{:?}", read_data("./data/datax").unwrap());
+    println!("{:?}", read_data::<String>("./data/datax").unwrap());
 }
