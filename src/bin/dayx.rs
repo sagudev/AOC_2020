@@ -47,7 +47,7 @@ fn data_read() {
 }
 
 #[test]
-fn dayx_calc() {
+fn calc() {
     // part 1
     assert_eq!(do_calc(12), 2);
     assert_eq!(do_calc(14), 2);

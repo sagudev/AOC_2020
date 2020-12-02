@@ -74,7 +74,7 @@ fn data_read() {
 }
 
 #[test]
-fn day1_calc() {
+fn calc() {
     // part 1
     let v = vec![1721, 979, 366, 299, 675, 1456];
     assert_eq!(find_2020(&v), Some((299, 1721)));

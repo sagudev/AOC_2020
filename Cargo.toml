@@ -3,7 +3,7 @@ name = "aoc_2020"
 version = "0.1.0"
 authors = ["sagudev <samo.golez@outlook.com>"]
 edition = "2018"
-default-run = "day1"
+default-run = "day2"
 
 [lib]
 name = "aoc"
@@ -12,6 +12,10 @@ path = "src/lib.rs"
 [[bin]]
 name = "dayx"
 path = "src/bin/dayx.rs"
+
+[[bin]]
+name = "day2"
+path = "src/bin/day2.rs"
 
 [[bin]]
 name = "day1"
