@@ -30,9 +30,7 @@ where
     T: FromStr,
     <T as FromStr>::Err: Debug,
 {
-    let v = vec.iter()
-        .map(|line| line.parse::<T>().unwrap())
-        .collect();
+    let v = vec.iter().map(|line| line.parse::<T>().unwrap()).collect();
     Ok(v)
 }
 
@@ -57,8 +55,10 @@ macro_rules! printer {
 /// data is split by newline
 pub fn js_mach(day: mach::Days, s: String) -> Box<[JsValue]> {
     let day = day.new(
-        s.lines().filter(|line| !line.is_empty())
-            .map(|line| line.trim().to_string()).collect(),
+        s.lines()
+            .filter(|line| !line.is_empty())
+            .map(|line| line.trim().to_string())
+            .collect(),
     );
     vec![
         wasm_bindgen::JsValue::from_str(&day.p1()),
