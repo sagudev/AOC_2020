@@ -46,7 +46,7 @@ impl Iline {
     fn get(&self, idx: usize) -> Obj {
         let mut num = idx;
         let len = self.line.len();
-        if idx > len {
+        if idx >= len {
             for _ in 0..((idx as f64 / len as f64).floor() as i64) {
                 num -= len
             }
