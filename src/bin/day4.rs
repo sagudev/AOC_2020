@@ -3,39 +3,28 @@ use std::error::Error;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
-//
-//byr (Birth Year)
-//iyr (Issue Year)
-//eyr (Expiration Year)
-//hgt (Height)
-//hcl (Hair Color)
-//ecl (Eye Color)
-//pid (Passport ID)
-//cid (Country ID)
-fn is_valid(s: &str) -> bool {
-    s.contains("byr:")
-        && s.contains("iyr:")
-        && s.contains("eyr:")
-        && s.contains("hgt:")
-        && s.contains("hcl:")
-        && s.contains("ecl:")
-        && s.contains("pid:")
-    //&& s.contains("cid:")
-}
-
-struct Fields {
+/// Passport
+struct Passport {
+    /// byr (Birth Year)
     byr: Option<usize>,
+    /// iyr (Issue Year)
     iyr: Option<usize>,
+    /// eyr (Expiration Year)
     eyr: Option<usize>,
+    /// hgt (Height)
     hgt: Option<String>,
+    /// hcl (Hair Color)
     hcl: Option<String>,
+    /// ecl (Eye Color)
     ecl: Option<String>,
+    /// pid (Passport ID)
     pid: Option<String>,
     #[allow(dead_code)]
+    /// cid (Country ID)
     cid: Option<String>,
 }
 
-impl Fields {
+impl Passport {
     /*
     byr (Birth Year) - four digits; at least 1920 and at most 2002.
     iyr (Issue Year) - four digits; at least 2010 and at most 2020.
@@ -57,6 +46,16 @@ impl Fields {
             && is_ecl(&self.ecl.as_ref().unwrap())
             && is_pid(&self.pid.as_ref().unwrap())
         // cid skipped
+    }
+    fn is_valid(&self) -> bool {
+        self.byr.is_some()
+            && self.iyr.is_some()
+            && self.eyr.is_some()
+            && self.hgt.is_some()
+            && self.hcl.is_some()
+            && self.ecl.is_some()
+            && self.pid.is_some()
+        //&& self.cid.is_some()
     }
 }
 
@@ -120,7 +119,7 @@ fn is_hgt(hgt: &str) -> bool {
     }
 }
 
-impl FromStr for Fields {
+impl FromStr for Passport {
     type Err = ParseIntError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let v: Vec<&str> = s.split(' ').collect();
@@ -159,12 +158,21 @@ impl FromStr for Fields {
     }
 }
 
-fn data_validation(s: &str) -> bool {
-    if is_valid(s) {
-        s.parse::<Fields>().unwrap().is_data_valid()
+fn is_valid(s: &str) -> bool {
+    if let Ok(r) = s.parse::<Passport>() {
+        r.is_valid()
     } else {
         false
     }
+}
+
+fn data_validation(s: &str) -> bool {
+    if let Ok(r) = s.parse::<Passport>() {
+        if r.is_valid() {
+            return r.is_data_valid();
+        }
+    }
+    false
 }
 
 fn p1(data: &[String]) -> usize {
@@ -191,9 +199,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Hello, Advent Of Code 2020!");
     // part 1
     let data: Vec<String> = read_data_space_saperator("./data/data4").unwrap();
-    println!("Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file, how many passports are valid? {}", p1(&data));
+    println!("Count the number of valid passports - those that have all required Passport. Treat cid as optional. In your batch file, how many passports are valid? {}", p1(&data));
     //part 2
-    println!("Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as optional. In your batch file, how many passports are valid? {}", p2(&data));
+    println!("Count the number of valid passports - those that have all required Passport and valid values. Continue to treat cid as optional. In your batch file, how many passports are valid? {}", p2(&data));
     Ok(())
 }
 
@@ -262,4 +270,6 @@ fn calc() {
     assert_eq!(data_validation(&data[5]), true);
     assert_eq!(data_validation(&data[6]), true);
     assert_eq!(data_validation(&data[7]), true);
+
+    assert_eq!(p2(&data), 4);
 }
