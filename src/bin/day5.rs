@@ -1,5 +1,5 @@
-use std::collections::HashSet;
 use aoc::read_data;
+use std::collections::HashSet;
 use std::error::Error;
 
 fn get_row(s: &str) -> u8 {
@@ -33,7 +33,7 @@ fn min(data: &[String]) -> usize {
 
 fn p2(data: &[String]) -> usize {
     let full_set: HashSet<usize> = (min(&data)..p1(&data)).collect();
-    let my_set: HashSet<usize> = data.iter().map(|x| {calc_id(x)}).collect();
+    let my_set: HashSet<usize> = data.iter().map(|x| calc_id(x)).collect();
     let diff: Vec<usize> = full_set.difference(&my_set).copied().collect();
     diff[0]
 }
