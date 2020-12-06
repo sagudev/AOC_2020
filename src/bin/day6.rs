@@ -6,7 +6,6 @@ fn line_yes(s: &str) -> usize {
     let my_set: HashSet<char> = s.chars().collect();
     let set: HashSet<char> = ('a'..='z').collect();
     let v: Vec<char> = set.difference(&my_set).copied().collect();
-    //println!("{} || {} || {:?} || {:?}", v.len(), 26-v.len(), v, my_set);
     26 - v.len()
 }
 
@@ -26,12 +25,9 @@ fn group_yes(s: &str) -> usize {
         .map(|x| x.chars().collect())
         .collect();
     let mut c: HashSet<char> = v[0].clone();
-    //let v: Vec<char> = set.difference(&my_set).copied().collect();
     for e in v {
         c = c.intersection(&e).copied().collect()
     }
-    //println!("{} || {} || {:?} || {:?}", v.len(), 26-v.len(), v, my_set);
-    //26 - v.len()
     c.len()
 }
 
