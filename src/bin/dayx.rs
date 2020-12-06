@@ -20,24 +20,29 @@ fn do_calc_ff(mass: i32) -> i32 {
     all
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
-    println!("Hello, Advent Of Code 2020!");
-    // part 1
-    let data: Vec<String> = read_data("./data/datax").unwrap();
+fn p1(data: &[String]) -> i32 {
     let mut all = 0;
-    for mass in data.iter() {
+    for mass in data {
         all += do_calc(mass.parse::<i32>().unwrap());
     }
-    println!("Fuel needed (part 1): {}", all);
-    //assert_eq!(3376997, all);
-    //part 2
+    all
+}
+
+fn p2(data: &[String]) -> i32 {
     let mut all = 0;
-    for mass in data.iter() {
+    for mass in data {
         all += do_calc_ff(mass.parse::<i32>().unwrap());
     }
-    println!("Fuel needed (part 2): {}", all);
-    //assert_eq!(5062623, all);
-    //part 2
+    all
+}
+
+fn main() -> Result<(), Box<dyn Error>> {
+    println!("Hello, Advent Of Code 2020!");
+    let data: Vec<String> = read_data("./data/datax").unwrap();
+    // part 1
+    println!("Fuel needed (part 1): {}", p1(&data));
+    // part 2
+    println!("Fuel needed (part 2): {}", p2(&data));
     Ok(())
 }
 
