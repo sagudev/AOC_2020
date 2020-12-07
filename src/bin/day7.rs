@@ -69,11 +69,9 @@ fn p1(hash: &HashMap<&str, Contain>) -> usize {
 
 fn must_hold(bag: &str, hash: &HashMap<&str, Contain>) -> usize {
     let mut i = 0;
-    println!("-{}", bag);
     if let Some(t) = hash.get(bag) {
         if let Some(v) = t {
             for u in v {
-                println!("{:?}", u);
                 i += u.1;
                 i += u.1 * must_hold(&u.0, hash);
             }
