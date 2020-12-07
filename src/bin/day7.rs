@@ -1,6 +1,6 @@
-use std::collections::HashSet;
 use aoc::read_data;
 use std::collections::HashMap;
+use std::collections::HashSet;
 use std::error::Error;
 use std::num::ParseIntError;
 use std::str::FromStr;
@@ -48,7 +48,7 @@ fn can_bag_hold_gold(bag: &str, hash: &HashMap<&str, Contain>) -> bool {
                 if can_bag_hold_gold(&u.0, hash) {
                     return true;
                 }
-            };
+            }
         }
     }
     false
@@ -76,14 +76,13 @@ fn must_hold(bag: &str, hash: &HashMap<&str, Contain>) -> usize {
                 println!("{:?}", u);
                 i += u.1;
                 i += u.1 * must_hold(&u.0, hash);
-            };
+            }
         }
     } else {
         panic!("hi")
     }
     i
 }
-
 
 fn p2(hash: &HashMap<&str, Contain>) -> usize {
     must_hold("shiny gold", hash)
@@ -95,9 +94,15 @@ fn main() -> Result<(), Box<dyn Error>> {
     let hash = hash_data(&data);
     //println!("|| {:#?}", hash);
     // part 1
-    println!("How many bag colors can eventually contain at least one shiny gold bag?  {}", p1(&hash));
+    println!(
+        "How many bag colors can eventually contain at least one shiny gold bag?  {}",
+        p1(&hash)
+    );
     // part 2
-    println!("How many individual bags are required inside your single shiny gold bag? {}", p2(&hash));
+    println!(
+        "How many individual bags are required inside your single shiny gold bag? {}",
+        p2(&hash)
+    );
     Ok(())
 }
 
