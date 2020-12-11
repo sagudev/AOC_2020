@@ -1,6 +1,5 @@
 use aoc::read_data;
 use std::collections::HashSet;
-use std::convert::TryInto;
 use std::error::Error;
 use std::iter::FromIterator;
 
@@ -37,19 +36,22 @@ fn m1(data: &[i64]) -> (u32, u32) {
     let mut data: Vec<i64> = data.iter().copied().collect();
     data.push(0);
     data.sort_unstable();
-    let mut d1: Vec<i64> = data.iter().map(|d| {
-        let mut count = 0;
-        if data.contains(&(d - 3)) {
-            count += 1;
-        }
-        if data.contains(&(d - 2)) {
-            count += 1;
-        }
-        if data.contains(&(d - 1)) {
-            count += 1;
-        }
-        count
-    }).collect();
+    let mut d1: Vec<i64> = data
+        .iter()
+        .map(|d| {
+            let mut count = 0;
+            if data.contains(&(d - 3)) {
+                count += 1;
+            }
+            if data.contains(&(d - 2)) {
+                count += 1;
+            }
+            if data.contains(&(d - 1)) {
+                count += 1;
+            }
+            count
+        })
+        .collect();
     d1.remove(0);
     println!("{:?}", d1);
     let mut full = 0;
@@ -58,17 +60,17 @@ fn m1(data: &[i64]) -> (u32, u32) {
         if d1[i] != 1 {
             full += 1;
         }
-        if i + 2 < d1.len() && d1[i] != 1 && d1[i+1] != 1 && d1[i+2] != 1 {
-            tri +=1;
+        if i + 2 < d1.len() && d1[i] != 1 && d1[i + 1] != 1 && d1[i + 2] != 1 {
+            tri += 1;
         }
     }
     println!("{} | {}", tri, full);
-    (full-(tri*3), tri)
+    (full - (tri * 3), tri)
 }
 
 fn p2(data: &[i64]) -> i64 {
     let t = m1(&data);
-    2_i64.pow(t.0)*7_i64.pow(t.1)
+    2_i64.pow(t.0) * 7_i64.pow(t.1)
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -89,12 +91,10 @@ fn data_read() {
 #[test]
 fn calc() {
     let data: Vec<i64> = vec![16, 10, 15, 5, 1, 11, 7, 19, 6, 12, 4];
-    let mut data1: Vec<i64> = vec![
+    let data1: Vec<i64> = vec![
         28, 33, 18, 42, 31, 14, 46, 20, 48, 47, 24, 23, 49, 45, 19, 38, 39, 11, 1, 64, 25, 35, 8,
         17, 7, 9, 4, 2, 34, 10, 3,
     ];
-    //data1.sort_unstable();
-    //println!("{:?}", data1);
     // part 1
     assert_eq!(my_device(&data), 22);
     assert_eq!(jolts_1_3(&data), (7, 5));
