@@ -3,6 +3,7 @@ use std::error::Error;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
+#[derive(Clone)]
 enum Bus {
     Id(usize),
     X,
@@ -56,7 +57,7 @@ fn p1(d2: &[usize], d1: usize) -> usize {
     v
 } */
 
-fn check_t(data: &[Bus], t: usize) -> bool {
+fn check_t2(data: &[Bus], t: usize) -> bool {
     let mut t = t;
     for d in data {
         match d {
@@ -64,6 +65,8 @@ fn check_t(data: &[Bus], t: usize) -> bool {
             Bus::Id(x) => {
                 if t % x != 0 {
                     return false;
+                } else {
+                    println!("{} {}", t, x);
                 }
             }
         }
@@ -72,11 +75,33 @@ fn check_t(data: &[Bus], t: usize) -> bool {
     true
 }
 
-fn p2(data: &[Bus]) -> usize {
+fn check_t(data: &[Bus], t: usize) -> Option<usize> {
+    let mut t = t;
+    for d in data {
+        match d {
+            Bus::X => {}
+            Bus::Id(x) => {
+                if t % x != 0 {
+                    return None;
+                }
+            }
+        }
+        t -= 1
+    }
+    Some(t+1)
+}
+
+fn p2(data: &Vec<Bus>) -> usize {
+    let mut data = data.clone();
+    data.reverse();
     if let Bus::Id(c) = data[0] {
         let mut t = c;
+        //let r = (100000000000000.0 / c as f64).ceil() as usize;
+        //t = r * c;
         loop {
-            if check_t(&data, t) {
+            //println!("||||||||||| {}", t);
+            if let Some(x) = check_t(&data, t) {
+                t = x;
                 break;
             }
             t += c;
@@ -88,14 +113,14 @@ fn p2(data: &[Bus]) -> usize {
 }
 
 #[allow(dead_code)]
-fn p2_2(data: &[Bus]) -> usize {
+fn p22(data: &[Bus]) -> usize {
     if let Bus::Id(c) = data[0] {
         let mut t = c;
         //let r = (100000000000000.0 / c as f64).ceil() as usize;
         //t = r * c;
         loop {
-            //println!("{}", t);
-            if check_t(&data, t) {
+            //println!("||||||||||| {}", t);
+            if check_t2(&data, t) {
                 break;
             }
             t += c;
