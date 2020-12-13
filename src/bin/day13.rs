@@ -87,6 +87,7 @@ fn p2(data: &[Bus]) -> usize {
     }
 }
 
+#[allow(dead_code)]
 fn p2_2(data: &[Bus]) -> usize {
     if let Bus::Id(c) = data[0] {
         let mut t = c;
