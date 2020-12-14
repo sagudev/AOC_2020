@@ -3,10 +3,19 @@ use std::error::Error;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
-#[derive(Clone)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 enum Bus {
     Id(usize),
     X,
+}
+
+impl Bus {
+    pub fn unwrap(self) -> usize {
+        match self {
+            Bus::Id(val) => val,
+            _ => panic!("called `Bus::unwrap()` on a `None` value"),
+        }
+    }
 }
 
 impl FromStr for Bus {
@@ -75,41 +84,58 @@ fn check_t2(data: &[Bus], t: usize) -> bool {
     true
 }
 
-fn check_t(data: &[Bus], t: usize) -> Option<usize> {
-    let mut t = t;
-    for d in data {
-        match d {
+fn check_t(data: &[Bus], t: usize, idx: usize) -> bool {
+    //println!("|||");
+    let mut tt = t + 1;
+    for i in data.iter().skip(idx + 1) {
+        //println!("||{:?}", i);
+        match i {
             Bus::X => {}
             Bus::Id(x) => {
-                if t % x != 0 {
-                    return None;
+                if tt % x != 0 {
+                    return false;
                 }
             }
         }
-        t -= 1
+        tt += 1
     }
-    Some(t+1)
+    let mut tt = t - 1;
+    for i in data.iter().rev().skip(data.len() - idx) {
+        //println!("|{:?}", i);
+        match i {
+            Bus::X => {}
+            Bus::Id(x) => {
+                if tt % x != 0 {
+                    return false;
+                }
+            }
+        }
+        tt -= 1
+    }
+    true
 }
 
-fn p2(data: &Vec<Bus>) -> usize {
-    let mut data = data.clone();
-    data.reverse();
-    if let Bus::Id(c) = data[0] {
-        let mut t = c;
-        //let r = (100000000000000.0 / c as f64).ceil() as usize;
-        //t = r * c;
-        loop {
-            //println!("||||||||||| {}", t);
-            if let Some(x) = check_t(&data, t) {
-                t = x;
-                break;
-            }
-            t += c;
+fn p2(data: &[Bus]) -> usize {
+    let c = data
+        .iter()
+        .filter(|x| **x != Bus::X)
+        .map(|x| x.unwrap())
+        .max()
+        .unwrap();
+    let i = data.iter().position(|&x| x == Bus::Id(c)).unwrap();
+    println!("{}", c);
+    let mut t = c;
+    //let r = (500000000000000.0 / c as f64).ceil() as usize;
+    //t = r * c;
+    println!("{}", t);
+    loop {
+        //println!("||||||||||| {}", t);
+        if check_t(&data, t, i) {
+            break;
         }
-        t
-    } else {
-        0
+        t += c;
     }
+    t - i
 }
 
 #[allow(dead_code)]
