@@ -103,13 +103,10 @@ impl Machine {
                 let mut s = s.chars();
                 self.mem.insert(
                     usize::from_str_radix(
-                        &masked.chars().map(|x| {
-                            if x == 'X' {
-                                s.next().unwrap()
-                            } else {
-                                x
-                            }
-                        }).collect::<String>(),
+                        &masked
+                            .chars()
+                            .map(|x| if x == 'X' { s.next().unwrap() } else { x })
+                            .collect::<String>(),
                         2,
                     )
                     .unwrap(),
