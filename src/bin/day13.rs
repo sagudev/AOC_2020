@@ -1,7 +1,9 @@
 use aoc::read_data;
 use std::error::Error;
 use std::num::ParseIntError;
+use std::rc::Rc;
 use std::str::FromStr;
+use std::sync::Arc;
 
 #[derive(Clone, Copy, PartialEq, Debug)]
 enum Bus {
@@ -84,7 +86,7 @@ fn check_t2(data: &[Bus], t: usize) -> bool {
     true
 }
 
-fn check_t(data: &[Bus], t: usize, idx: usize) -> bool {
+fn check_t22(data: &[Bus], t: usize, idx: usize) -> bool {
     //println!("|||");
     let mut tt = t + 1;
     for i in data.iter().skip(idx + 1) {
@@ -115,7 +117,7 @@ fn check_t(data: &[Bus], t: usize, idx: usize) -> bool {
     true
 }
 
-fn p2(data: &[Bus]) -> usize {
+fn p222(data: &[Bus]) -> usize {
     let c = data
         .iter()
         .filter(|x| **x != Bus::X)
@@ -130,7 +132,7 @@ fn p2(data: &[Bus]) -> usize {
     println!("{}", t);
     loop {
         //println!("||||||||||| {}", t);
-        if check_t(&data, t, i) {
+        if check_t22(&data, t, i) {
             break;
         }
         t += c;
@@ -155,6 +157,56 @@ fn p22(data: &[Bus]) -> usize {
     } else {
         0
     }
+}
+
+fn check_t(data: &[(usize, Bus)], t: usize) -> Option<usize> {
+    for (i, d) in data {
+        match d {
+            Bus::X => {}
+            Bus::Id(x) => {
+                if (t + i) % x != 0 {
+                    //println!("{}: {} + {}", x, t, i);
+                    return None;
+                }
+            }
+        }
+    }
+    Some(t)
+}
+
+const NTHREADS: u32 = 4;
+
+// inti threds 1 time and then send cmd
+fn p2(data: &[Bus]) -> usize {
+    let data: Arc<Vec<(usize, Bus)>> = Arc::new(
+        data.iter()
+            .enumerate()
+            .filter(|(_, x)| **x != Bus::X)
+            .map(|(x, y)| (x, *y))
+            .collect(),
+    );
+    if let (_, Bus::Id(c)) = data[0] {
+        let mut t = c;
+        loop {
+            let mut children = vec![];
+
+            for i in 0..NTHREADS {
+                let data = Arc::clone(&data);
+                children.push(std::thread::spawn(move || -> Option<usize> {
+                    check_t(&data, t)
+                }));
+                t += c;
+            }
+
+            for child in children {
+                let x = child.join();
+                if let Some(y) = x.unwrap() {
+                    return y;
+                }
+            }
+        }
+    }
+    0
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
