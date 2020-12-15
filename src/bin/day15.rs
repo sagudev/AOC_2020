@@ -2,6 +2,7 @@ use aoc::read_data;
 use std::collections::HashMap;
 use std::error::Error;
 
+#[allow(dead_code)]
 fn trans(s: &str) -> Vec<usize> {
     s.split(',').map(|x| x.parse().unwrap()).collect()
 }
@@ -13,7 +14,7 @@ fn turrn(data: &mut Vec<usize>, videno: &mut HashMap<usize, (usize, usize)>, tur
         return data[turn - 1];
     } else {
         let prej = data[turn - 2];
-        let v = videno.get(&prej).unwrap();
+        let v = *videno.get(&prej).unwrap();
         //println!("{} | v: {:?} prej: {} zdej: {}", turn, v, prej, v.0 - v.1);
         if v.1 == 0 {
             data.push(0);
