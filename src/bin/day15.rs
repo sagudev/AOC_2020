@@ -17,11 +17,11 @@ fn turrn(data: &mut Vec<usize>, videno: &mut HashMap<usize, (usize, usize)>, tur
         //println!("{} | v: {:?} prej: {} zdej: {}", turn, v, prej, v.0 - v.1);
         if v.1 == 0 {
             data.push(0);
-            let m = videno.entry(0).or_insert((0,0));
+            let m = videno.entry(0).or_insert((0, 0));
             *m = (turn, m.0)
         } else {
             data.push(v.0 - v.1);
-            let m = videno.entry(v.0 - v.1).or_insert((0,0));
+            let m = videno.entry(v.0 - v.1).or_insert((0, 0));
             *m = (turn, m.0)
         }
         //println!("last is: {} on {}", data[turn - 2], first);
