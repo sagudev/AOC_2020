@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use aoc::read_data;
 use std::error::Error;
 use std::num::ParseIntError;
