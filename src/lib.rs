@@ -43,3 +43,28 @@ where
     v.push(s.trim().parse().unwrap());
     Ok(v)
 }
+
+/// keep spaces on sections
+pub fn read_data_space_saperator2<T>(filename: &str, sep: char) -> Result<Vec<T>, Error>
+where
+    T: FromStr,
+    <T as FromStr>::Err: Debug,
+{
+    let file = File::open(filename)?;
+    let data: Vec<String> = BufReader::new(file)
+        .lines()
+        .map(|line| line.unwrap())
+        .collect();
+    let mut v: Vec<T> = Vec::new();
+    let mut s = String::new();
+    for l in data {
+        if l == "" {
+            v.push(s.trim().parse().unwrap());
+            s.clear()
+        } else {
+            s.push_str(&(sep.to_string().to_owned() + l.trim()))
+        }
+    }
+    v.push(s.trim().parse().unwrap());
+    Ok(v)
+}
