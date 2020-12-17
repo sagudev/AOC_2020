@@ -1,9 +1,10 @@
-#![allow(dead_code)]
+#![allow(warnings)]
 use aoc::read_data;
 use std::error::Error;
 use std::num::ParseIntError;
 use std::rc::Rc;
 use std::str::FromStr;
+use std::sync::mpsc::sync_channel;
 use std::sync::Arc;
 
 #[derive(Clone, Copy, PartialEq, Debug)]
@@ -175,7 +176,49 @@ fn check_t(data: &[(usize, Bus)], t: usize) -> Option<usize> {
     Some(t)
 }
 
-const NTHREADS: u32 = 4;
+use std::sync::mpsc::channel;
+use std::thread;
+
+/// main thread
+struct MT<T, U> {
+    tx: std::sync::mpsc::Sender<T>,
+    rx: std::sync::mpsc::Receiver<U>,
+}
+
+/// worker thread
+struct WT<T, U> {
+    tx: std::sync::mpsc::Sender<U>,
+    rx: std::sync::mpsc::Receiver<T>,
+}
+
+/// 2-way channel T for send, U for recive
+struct RTX<T, U> {
+    /// main thread
+    m: MT<T, U>,
+    /// worker thread
+    w: WT<T, U>,
+}
+
+impl<T, U> RTX<T, U> {
+    fn new() -> Self {
+        let (tx, rx) = channel();
+        let (txx, rxx) = channel();
+        Self {
+            m: MT { tx, rx: rxx },
+            w: WT { tx: txx, rx },
+        }
+    }
+    fn get_mw(self) -> (MT<T, U>, WT<T, U>) {
+        (self.m, self.w)
+    }
+}
+
+fn wt(wt: WT<usize, Option<usize>>, data: &std::vec::Vec<(usize, Bus)>) {
+    loop {
+        let get = wt.rx.recv().unwrap();
+        wt.tx.send(check_t(&data, get)).unwrap()
+    }
+}
 
 // inti threds 1 time and then send cmd
 fn p2(data: &[Bus]) -> usize {
@@ -186,24 +229,57 @@ fn p2(data: &[Bus]) -> usize {
             .map(|(x, y)| (x, *y))
             .collect(),
     );
+    let (m1, w1) = RTX::new().get_mw();
+    let (m2, w2) = RTX::new().get_mw();
+    let (m3, w3) = RTX::new().get_mw();
+    let (m4, w4) = RTX::new().get_mw();
+    {
+        let data = Arc::clone(&data);
+        thread::spawn(move || {
+            wt(w1, &data);
+        });
+    }
+    {
+        let data = Arc::clone(&data);
+        thread::spawn(move || {
+            wt(w2, &data);
+        });
+    }
+    {
+        let data = Arc::clone(&data);
+        thread::spawn(move || {
+            wt(w3, &data);
+        });
+    }
+    {
+        let data = Arc::clone(&data);
+        thread::spawn(move || {
+            wt(w4, &data);
+        });
+    }
     if let (_, Bus::Id(c)) = data[0] {
         let mut t = c;
         loop {
-            let mut children = vec![];
+            m1.tx.send(t).unwrap();
+            t += c;
+            m2.tx.send(t).unwrap();
+            t += c;
+            m3.tx.send(t).unwrap();
+            t += c;
+            m4.tx.send(t).unwrap();
+            t += c;
 
-            for i in 0..NTHREADS {
-                let data = Arc::clone(&data);
-                children.push(std::thread::spawn(move || -> Option<usize> {
-                    check_t(&data, t)
-                }));
-                t += c;
+            if let Some(x) = m1.rx.recv().unwrap() {
+                return x;
             }
-
-            for child in children {
-                let x = child.join();
-                if let Some(y) = x.unwrap() {
-                    return y;
-                }
+            if let Some(x) = m2.rx.recv().unwrap() {
+                return x;
+            }
+            if let Some(x) = m3.rx.recv().unwrap() {
+                return x;
+            }
+            if let Some(x) = m4.rx.recv().unwrap() {
+                return x;
             }
         }
     }
@@ -228,12 +304,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 #[test]
-fn data_read() {
+fn data_read13() {
     println!("{:?}", read_data::<String>("./data/data13").unwrap());
 }
 
 #[test]
-fn calc() {
+fn calc13() {
     let data: Vec<String> = vec!["939".to_string(), "7,13,x,x,59,x,31,19".to_string()];
     let d1: usize = data[0].parse().unwrap();
     let d2: Vec<usize> = data[1]
