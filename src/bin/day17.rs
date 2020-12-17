@@ -259,7 +259,7 @@ struct D4 {
 
 impl D4 {
     fn insert0(&mut self, w: i32) {
-        let z0 = self.w.get(&0).unwrap();
+        let z0 = self.w.get(&0).unwrap().clone();
         let (min, max) = (*z0.z.keys().min().unwrap(), *z0.z.keys().max().unwrap());
         let r0 = VecDeque::from_iter(vec![Cell::Inactive; z0.rows]);
         let mut z = HashMap::new();
@@ -282,10 +282,10 @@ impl D4 {
     }
     fn extend(&mut self, min: i32, max: i32) {
         let z0 = self.w.get(&0).unwrap();
-        let (min, max) = (*z0.z.keys().min().unwrap(), *z0.z.keys().max().unwrap());
+        let (minn, maxx) = (*z0.z.keys().min().unwrap(), *z0.z.keys().max().unwrap());
         // extend every
         for d3 in self.w.values_mut() {
-            d3.extend(min, max);
+            d3.extend(minn, maxx);
         }
         // extend z
         self.insert0(min - 1);
@@ -439,11 +439,11 @@ fn calc17() {
     );
     let mut mdata = data.clone();
     // part 1
-    //println!("{}", mdata);
-    //cikel(&mut mdata);
-    //println!("{}", mdata);
-    //cikel(&mut mdata);
-    //println!("{}", mdata);
+    println!("{}", mdata);
+    cikel(&mut mdata);
+    println!("{}", mdata);
+    cikel(&mut mdata);
+    println!("{}", mdata);
     assert_eq!(p1(&data), 112);
     // part 2
     let data4 = trans4(data);
