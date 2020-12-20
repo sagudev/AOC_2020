@@ -75,7 +75,7 @@ impl Expr {
                     let len = d.len();
                     if i < len {
                         if !d.check(i, c) {
-                            return false
+                            return false;
                         }
                     } else {
                         i -= len;
